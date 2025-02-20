@@ -1,4 +1,4 @@
-class Solution {
+class Solution1 {
     public String longestCommonPrefix(String[] strs) {
         String prefixStr="";                                        // Variable to store the matched characters.
 

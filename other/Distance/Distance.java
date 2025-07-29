@@ -1,3 +1,4 @@
+package Distance;
 public class Distance {
     public static void main(String[] args) {
         String password="bbbb";

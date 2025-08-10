@@ -78,5 +78,5 @@ class Solution {
 }
 
 
-// Time Complexity:- O(N)
-// Space Complexity:- O(N)
+// Time Complexity:- O(N^2)
+// Space Complexity:- O(N^2)

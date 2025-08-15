@@ -1,47 +1,66 @@
+
 class Solution {
-    public int reversePairs(int[] nums) {
-        int[] temp = new int[nums.length];
-        return mergeSort(nums, temp, 0, nums.length - 1);
-    }
+    public static int merge(int[] arr, int p, int q, int r) {
+        int inversions = 0;
 
-    private int mergeSort(int[] arr, int[] temp, int left, int right) {
-        if (left >= right) return 0;
+        int n1 = q - p + 1;
+        int n2 = r - q;
 
-        int mid = left + (right - left) / 2;
-        int count = mergeSort(arr, temp, left, mid) +
-                    mergeSort(arr, temp, mid + 1, right);
+        int[] L = new int[n1];
+        int[] R = new int[n2];
 
-        // Count reverse pairs
-        int j = mid + 1;
-        for (int i = left; i <= mid; i++) {
-            while (j <= right && (long) arr[i] > 2L * arr[j]) {
+        for (int i = 0; i < n1; i++) {
+            L[i] = arr[p + i];
+        }
+        for (int j = 0; j < n2; j++) {
+            R[j] = arr[q + 1 + j];
+        }
+
+        // Counting reverse pairs
+        int i = 0, j = 0;
+        int count = 0;
+        for (i = 0, j = 0; i < n1; i++) {
+            while (j < n2 && (long) L[i] > 2L * (long) R[j]) {
                 j++;
             }
-            count += (j - (mid + 1));
+            count += j;
         }
+        inversions += count;
 
-        // Merge step
-        merge(arr, temp, left, mid, right);
-        return count;
-    }
-
-    private void merge(int[] arr, int[] temp, int left, int mid, int right) {
-        int i = left, j = mid + 1, k = left;
-
-        while (i <= mid && j <= right) {
-            if (arr[i] <= arr[j]) {
-                temp[k++] = arr[i++];
+        // Merging without sentinels
+        i = 0;
+        j = 0;
+        int k = p;
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                arr[k++] = L[i++];
             } else {
-                temp[k++] = arr[j++];
+                arr[k++] = R[j++];
             }
         }
-        while (i <= mid) temp[k++] = arr[i++];
-        while (j <= right) temp[k++] = arr[j++];
-
-        // Copy merged part back
-        for (i = left; i <= right; i++) {
-            arr[i] = temp[i];
+        while (i < n1) {
+            arr[k++] = L[i++];
         }
+        while (j < n2) {
+            arr[k++] = R[j++];
+        }
+
+        return inversions;
+    }
+
+    public static int mergeSort(int[] arr, int p, int r) {
+        int ans = 0;
+        if (p < r) {
+            int q = (p + r) / 2;
+            ans += mergeSort(arr, p, q);
+            ans += mergeSort(arr, q + 1, r);
+            ans += merge(arr, p, q, r);
+        }
+        return ans;
+    }
+
+    public int reversePairs(int[] nums) {
+        return mergeSort(nums, 0, nums.length - 1);
     }
 }
 

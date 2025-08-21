@@ -1,31 +1,48 @@
 class Solution {
     public int compress(char[] chars) {
-        int read=0, write=0;
-
-        while(read < chars.length)
+        // Edge case
+        if(chars.length<=1)
         {
-            char currChar=chars[read];
-            int count=0;
+            return chars.length;
+        }
 
-            // Finding the occurrences
-            while(read < chars.length && currChar==chars[read])
+        StringBuilder sb=new StringBuilder();
+        int count=1;
+        char tempChar=chars[0];
+
+        for(int i=1; i<chars.length; i++)
+        {
+            if(tempChar==chars[i])
             {
-                read++;
                 count++;
             }
-
-            chars[write++]=currChar;
-
-            if(count>1)
+            if(tempChar!=chars[i])
             {
-                for(char c: Integer.toString(count).toCharArray())
+                sb.append(tempChar);
+                if(count!=1)
                 {
-                    chars[write++]=c;
+                    sb.append(count);
+                }
+                tempChar=chars[i];
+                count=1;
+            }
+            if(i==chars.length-1)
+            {
+                sb.append(tempChar);
+                if(count!=1)
+                {
+                    sb.append(count);
                 }
             }
         }
 
-        return write;
+        //Copying the element from string builder to original array.
+        for(int j=0; j<sb.length(); j++)
+        {
+            chars[j]=sb.charAt(j);
+        }
+
+        return sb.length();
     }
 }
 

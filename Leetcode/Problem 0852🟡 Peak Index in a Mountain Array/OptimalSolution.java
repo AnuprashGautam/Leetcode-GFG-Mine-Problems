@@ -32,5 +32,5 @@ class Solution {
     }
 }
 
-// Time Complexity:- O(N)
-// Space Complexiyt:- O(N)      Due to recurssion stack
+// Time Complexity:- O(logN)
+// Space Complexiyt:- O(logN)      Due to recurssion stack

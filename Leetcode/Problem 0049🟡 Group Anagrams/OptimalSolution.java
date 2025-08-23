@@ -22,3 +22,6 @@ class Solution {
 
 // Time Complexity:- O(N*k)
 // Space Complexity:- O(N*k)
+
+// N is the length of strs array.
+// k is the average length of the string present in the array.
